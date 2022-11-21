@@ -4,8 +4,12 @@ namespace OAI_API.Repositories
 {
     public interface IAnswerRepository
     {
-        DataAnswer GetAnswer(string answer);
-        DataAnswer GetAnswer(int answerId);
-        DataAnswer GetAnswer(string[] answerKeyWords);
+        /// <summary>
+        /// Gets the answers information from the given Id
+        /// </summary>
+        /// <param name="answerId">The id of the answer</param>
+        /// <returns>all the answers information</returns>
+        Task<DataAnswer> GetAnswer(int answerId);
+        Task<DataAnswer> GetAnswer(string[] answerKeyWords);
     }
 }

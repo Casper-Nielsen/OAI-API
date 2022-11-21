@@ -2,10 +2,10 @@
 {
     public class DataAnswer
     {
-        string AnswerValue { get; set; } = string.Empty;
-        int AnswerId { get; set; }
-        AnswerType AnswerType { get; set; }
-        Status Status { get; set; }
+        public int AnswerId { get; set; }
+        public string AnswerValue { get; set; } = string.Empty;
+        public AnswerType AnswerType { get; set; }
+        public Status Status { get; set; }
     }
 
     public enum AnswerType

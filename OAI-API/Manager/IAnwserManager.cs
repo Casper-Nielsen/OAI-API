@@ -4,6 +4,6 @@ namespace OAI_API.Manager
 {
     public interface IAnwserManager
     {
-        BaseAnswer GetAnwser(string question);
+        Task<BaseAnswer> GetAnswer(string question);
     }
 }

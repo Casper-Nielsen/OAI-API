@@ -4,8 +4,12 @@ namespace OAI_API.Services
 {
     public interface IAnswerService
     {
-        BaseAnswer GetAnswer(string answer);
-        BaseAnswer GetAnswer(int answerId);
-        BaseAnswer GetAnswer(string[] answerKeyWords);
+        /// <summary>
+        /// Gets the answer from the given Id
+        /// </summary>
+        /// <param name="answerId">The id of the answer</param>
+        /// <returns>The simple answer with the type</returns>
+        Task<BaseAnswer> GetAnswer(int answerId);
+        Task<BaseAnswer> GetAnswer(string[] answerKeyWords);
     }
 }
