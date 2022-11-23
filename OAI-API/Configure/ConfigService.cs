@@ -9,13 +9,14 @@
         {
             _env = env;
 
+            // Sets the builder to require the appsettings
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", false, true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true);
+                .AddJsonFile("appsettings.json", false, true);
 
             _configuration = builder.Build();
         }
+
         public string GetConnectionString()
         {
             var connectionString = _configuration.GetConnectionString("default");

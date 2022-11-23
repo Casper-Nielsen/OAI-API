@@ -5,10 +5,10 @@ using OAI_API.Repositories;
 using OAI_API.Services;
 using OAI_API.Shared;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -20,6 +20,11 @@ builder.Services.AddSingleton<IDatabaseFactory, SharedDatabaseFactory>();
 builder.Services.AddTransient<IAnswerRepository, AnswerDBRepository>();
 builder.Services.AddTransient<IAnswerService, AnswerService>();
 builder.Services.AddTransient<IAnwserManager, AnswerManager>();
+
+builder.Services.AddTransient<ILocationRepository, LocationDBRepository>();
+builder.Services.AddTransient<ILocationService, LocationService>();
+
+builder.Configuration.AddJsonFile("appsettings.json", false, true);
 
 var app = builder.Build();
 

@@ -12,9 +12,9 @@ namespace OAI_API.Services
             _answerRepository = answerRepository;
         }
 
-        public async Task<BaseAnswer> GetAnswer(int answerId)
+        public async Task<BaseAnswer> GetAnswerAsync(int answerId)
         {
-            var dataAnswer = await _answerRepository.GetAnswer(answerId);
+            var dataAnswer = await _answerRepository.GetAnswerAsync(answerId);
 
             if (dataAnswer == null)
             {
@@ -26,9 +26,9 @@ namespace OAI_API.Services
             return answer;
         }
 
-        public async Task<BaseAnswer> GetAnswer(string[] answerKeyWords)
+        public async Task<BaseAnswer> GetAnswerAsync(string[] answerKeyWords)
         {
-            var dataAnswer = await _answerRepository.GetAnswer(answerKeyWords);
+            var dataAnswer = await _answerRepository.GetAnswerAsync(answerKeyWords);
 
             if (dataAnswer == null)
             {
@@ -40,12 +40,12 @@ namespace OAI_API.Services
             return answer;
         }
 
-        private BaseAnswer ConvertToBaseAnswer(DataAnswer answer)
+        private BaseAnswer ConvertToBaseAnswer(AnswerDTO answer)
         {
             return answer.AnswerType switch
             {
                 AnswerType.Static => new BaseAnswer(answer),
-                AnswerType.Location or AnswerType.external => new ExtendedAnswer(answer),
+                AnswerType.Location or AnswerType.External => new ExtendedAnswer(answer),
                 _ => throw new NotSupportedException("answer type is not supported"),
             };
         }

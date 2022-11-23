@@ -9,7 +9,12 @@ namespace OAI_API.Services
         /// </summary>
         /// <param name="answerId">The id of the answer</param>
         /// <returns>The simple answer with the type</returns>
-        Task<BaseAnswer> GetAnswer(int answerId);
-        Task<BaseAnswer> GetAnswer(string[] answerKeyWords);
+        Task<BaseAnswer> GetAnswerAsync(int answerId);
+        /// <summary>
+        /// Gets the answer that best matches the keywords.
+        /// </summary>
+        /// <param name="answerKeyWords">The keywords from the question</param>
+        /// <returns>The simple answer with the type</returns>
+        Task<BaseAnswer> GetAnswerAsync(string[] answerKeyWords);
     }
 }

@@ -1,6 +1,9 @@
 ﻿namespace OAI_API.Models
 {
-    public class DataAnswer
+    /// <summary>
+    /// Holds the Data about a Answer that should be saved
+    /// </summary>
+    public class AnswerDTO
     {
         public int AnswerId { get; set; }
         public string AnswerValue { get; set; } = string.Empty;
@@ -11,8 +14,8 @@
     public enum AnswerType
     {
         Static,
+        External,
         Location,
-        external
     }
 
     public enum Status
