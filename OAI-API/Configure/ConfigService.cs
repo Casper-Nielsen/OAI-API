@@ -28,5 +28,25 @@
 
             return connectionString;
         }
+
+        public (string address, int port) GetAddressPort()
+        {
+            var sect = _configuration.GetSection("Addresses").GetSection("default");
+
+            var address = sect.GetValue<string>("address");
+            var port = sect.GetValue<int>("port");
+
+            if (string.IsNullOrEmpty(address))
+            {
+                throw new ArgumentNullException(nameof(address), $@"default address string is empty");
+            }
+
+            if (port == 0)
+            {
+                throw new ArgumentNullException(nameof(port), "default port is zero");
+            }
+
+            return (address, port);
+        }
     }
 }
