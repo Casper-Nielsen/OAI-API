@@ -13,11 +13,11 @@ namespace OAI_API.Repositories
             _connectionFactory = connectionFactory;
         }
 
-        public async Task<DataAnswer> GetAnswer(int answerId)
+        public async Task<AnswerDTO> GetAnswerAsync(int answerId)
         {
             var connection = await _connectionFactory.GetConnection();
 
-            var answer = await connection.QueryFirstOrDefaultAsync<DataAnswer>($@"
+            var answer = await connection.QueryFirstOrDefaultAsync<AnswerDTO>($@"
                 SELECT 
                     Id AS AnswerId, 
                     AnswerType AS AnswerType, 
@@ -32,11 +32,11 @@ namespace OAI_API.Repositories
             return answer;
         }
 
-        public async Task<DataAnswer> GetAnswer(string[] answerKeyWords)
+        public async Task<AnswerDTO> GetAnswerAsync(string[] answerKeyWords)
         {
             var connection = await _connectionFactory.GetConnection();
 
-            var answer = await connection.QueryAsync<DataAnswer>($@"
+            var answer = await connection.QueryAsync<AnswerDTO>($@"
                 SELECT 
                     ans.Id AS AnswerId, 
                     ans.AnswerType AS AnswerType, 

@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MySqlConnector;
 using OAI_API.Configure;
 using System.Data;
 
@@ -6,7 +6,8 @@ namespace OAI_API.Shared;
 
 public class SharedDatabaseFactory : IDatabaseFactory
 {
-    private string _connectionString;
+    private readonly string _connectionString;
+    private MySqlConnection? _connection;
 
     public SharedDatabaseFactory(IConfigService config)
     {
@@ -15,17 +16,25 @@ public class SharedDatabaseFactory : IDatabaseFactory
 
     public async Task<IDbConnection> GetConnection()
     {
-        var connection = new MySqlConnection(_connectionString);
+        if (_connection == null)
+        {
+            _connection = new MySqlConnection(_connectionString);
+        }
+
+        if (_connection.State == ConnectionState.Open) 
+        {
+            return _connection; 
+        }
 
         try
         {
-            await connection.OpenAsync();
+            await _connection.OpenAsync();
 
-            return connection;
+            return _connection;
         }
         catch (Exception)
         {
-            await connection.DisposeAsync();
+            await _connection.DisposeAsync();
             throw;
         }
     }

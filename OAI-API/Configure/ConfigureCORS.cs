@@ -4,6 +4,9 @@
     {
         private const string CorsPolicyName = "AllowAllOrigins";
 
+        /// <summary>
+        /// Sets up Cors to allow anyconnections
+        /// </summary>
         public static void AddCustomCors(this IServiceCollection services)
         {
             services.AddCors(options =>
@@ -18,6 +21,9 @@
             });
         }
 
+        /// <summary>
+        /// Sets it to use the custom cors
+        /// </summary>
         public static void UseCustomCors(this IApplicationBuilder app)
         {
             app.UseCors(CorsPolicyName);

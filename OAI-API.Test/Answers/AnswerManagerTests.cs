@@ -23,12 +23,12 @@ namespace OAI_API.Test.Answers
             //mock data for repositoried that uses a database
             Mock<IAnswerRepository> _answerRepositoryMock = new Mock<IAnswerRepository>();
 
-            _answerRepositoryMock.Setup(r => r.GetAnswer(new string[1] { "test" })).ReturnsAsync(new DataAnswer { AnswerId = 1, AnswerType = AnswerType.Static, AnswerValue = "test answer", Status = Status.Active });
-            _answerRepositoryMock.Setup(r => r.GetAnswer(new string[4] { "this", "is", "a", "test" })).ReturnsAsync(new DataAnswer { AnswerId = 1, AnswerType = AnswerType.Static, AnswerValue = "test answer", Status = Models.Status.Active });
+            _answerRepositoryMock.Setup(r => r.GetAnswerAsync(new string[1] { "test" })).ReturnsAsync(new AnswerDTO { AnswerId = 1, AnswerType = AnswerType.Static, AnswerValue = "test answer", Status = Status.Active });
+            _answerRepositoryMock.Setup(r => r.GetAnswerAsync(new string[4] { "this", "is", "a", "test" })).ReturnsAsync(new AnswerDTO { AnswerId = 1, AnswerType = AnswerType.Static, AnswerValue = "test answer", Status = Models.Status.Active });
 
-            _answerRepositoryMock.Setup(r => r.GetAnswer(0)).ReturnsAsync(new DataAnswer { AnswerId = 0, AnswerType = AnswerType.Static, AnswerValue = "test answer0", Status = Status.Active });
-            _answerRepositoryMock.Setup(r => r.GetAnswer(1)).ReturnsAsync(new DataAnswer { AnswerId = 1, AnswerType = AnswerType.Static, AnswerValue = "test answer1", Status = Status.Active });
-            _answerRepositoryMock.Setup(r => r.GetAnswer(2)).ReturnsAsync(new DataAnswer { AnswerId = 2, AnswerType = AnswerType.external, AnswerValue = "test answer2", Status = Status.Active });
+            _answerRepositoryMock.Setup(r => r.GetAnswerAsync(0)).ReturnsAsync(new AnswerDTO { AnswerId = 0, AnswerType = AnswerType.Static, AnswerValue = "test answer0", Status = Status.Active });
+            _answerRepositoryMock.Setup(r => r.GetAnswerAsync(1)).ReturnsAsync(new AnswerDTO { AnswerId = 1, AnswerType = AnswerType.Static, AnswerValue = "test answer1", Status = Status.Active });
+            _answerRepositoryMock.Setup(r => r.GetAnswerAsync(2)).ReturnsAsync(new AnswerDTO { AnswerId = 2, AnswerType = AnswerType.External, AnswerValue = "test answer2", Status = Status.Active });
 
             IAnswerService _answerService = new AnswerService(_answerRepositoryMock.Object);
 

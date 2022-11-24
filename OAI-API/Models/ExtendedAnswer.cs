@@ -1,12 +1,15 @@
 ﻿namespace OAI_API.Models
 {
+    /// <summary>
+    /// A Extended Answer that have parmeters that could be used to find the answer
+    /// </summary>
     public class ExtendedAnswer : BaseAnswer
     {
         public string ExtededParmeter { get; set; } = string.Empty;
         
         public ExtendedAnswer() { }
 
-        public ExtendedAnswer(DataAnswer dataAnswer)
+        public ExtendedAnswer(AnswerDTO dataAnswer)
         {
             ExtededParmeter = dataAnswer.AnswerValue;
             AnswerId = dataAnswer.AnswerId;

@@ -9,7 +9,12 @@ namespace OAI_API.Repositories
         /// </summary>
         /// <param name="answerId">The id of the answer</param>
         /// <returns>all the answers information</returns>
-        Task<DataAnswer> GetAnswer(int answerId);
-        Task<DataAnswer> GetAnswer(string[] answerKeyWords);
+        Task<AnswerDTO> GetAnswerAsync(int answerId);
+        /// <summary>
+        /// Gets the answers information that best matches the keywords.
+        /// </summary>
+        /// <param name="answerKeyWords">The keywords from the question</param>
+        /// <returns>all the answers information</returns>
+        Task<AnswerDTO> GetAnswerAsync(string[] answerKeyWords);
     }
 }
