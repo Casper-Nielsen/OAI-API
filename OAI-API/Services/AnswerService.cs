@@ -6,10 +6,14 @@ namespace OAI_API.Services
     public class AnswerService : IAnswerService
     {
         private readonly IAnswerRepository _answerRepository;
+        private readonly IAIRepository _aiRepository;
 
-        public AnswerService(IAnswerRepository answerRepository)
+        public AnswerService(
+            IAnswerRepository answerRepository,
+            IAIRepository aiRepository)
         {
             _answerRepository = answerRepository;
+            _aiRepository = aiRepository;
         }
 
         public async Task<BaseAnswer> GetAnswerAsync(int answerId)
@@ -26,13 +30,13 @@ namespace OAI_API.Services
             return answer;
         }
 
-        public async Task<BaseAnswer> GetAnswerAsync(string[] answerKeyWords)
+        public async Task<BaseAnswer> GetAnswerAsync(string question)
         {
-            var dataAnswer = await _answerRepository.GetAnswerAsync(answerKeyWords);
+            var dataAnswer = await _aiRepository.GetAnswerAsync(question);
 
             if (dataAnswer == null)
             {
-                throw new ArgumentException("There are no answer with the given Id");
+                throw new ArgumentException("There are no answer with the given keywords");
             }
 
             BaseAnswer answer = ConvertToBaseAnswer(dataAnswer);

@@ -10,37 +10,32 @@ using System.Text.Json.Serialization;
 
 namespace OAI_API.Repositories
 {
-    public class AnswerTCPRepository : IAnswerRepository
+    public class AnswerTCPRepository : IAIRepository
     {
 
-        private readonly string address;
-        private readonly int port;
+        private readonly string _address;
+        private readonly int _port;
 
 
         public AnswerTCPRepository(IConfigService config)
         {
-            (address, port) = config.GetAddressPort();
+            (_address, _port) = config.GetAddressPort();
         }
 
-        public async Task<AnswerDTO> GetAnswerAsync(int answerId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<AnswerDTO> GetAnswerAsync(string[] answerKeyWords)
+        public async Task<AnswerDTO> GetAnswerAsync(string question)
         {
             // target address + port
-            var targetAddress = IPAddress.Parse(address);
-            var targetEndpoint = new IPEndPoint(targetAddress, port);
+            var targetAddress = IPAddress.Parse(_address);
+            var targetEndpoint = new IPEndPoint(targetAddress, _port);
             
             // create a socket and connect
             var socket = new Socket(targetEndpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             socket.Connect(targetEndpoint);
 
             // serialize the question
-            var mydict = new Dictionary<string, string[]>()
+            var mydict = new Dictionary<string, string>()
             {
-                ["question"] = answerKeyWords
+                ["question"] = question
             };
             var jsonRequest = JsonSerializer.Serialize(mydict);
             var reqBytes = Encoding.UTF8.GetBytes(jsonRequest);

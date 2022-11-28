@@ -17,7 +17,8 @@ builder.Services.AddCustomCors();
 
 builder.Services.AddSingleton<IConfigService>(new ConfigService(builder.Environment));
 builder.Services.AddSingleton<IDatabaseFactory, SharedDatabaseFactory>();
-builder.Services.AddTransient<IAnswerRepository, AnswerTCPRepository>();
+builder.Services.AddTransient<IAnswerRepository, AnswerDBRepository>();
+builder.Services.AddTransient<IAIRepository, AnswerTCPRepository>();
 builder.Services.AddTransient<IAnswerService, AnswerService>();
 builder.Services.AddTransient<IAnwserManager, AnswerManager>();
 

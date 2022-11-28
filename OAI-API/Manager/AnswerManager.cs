@@ -17,7 +17,7 @@ namespace OAI_API.Manager
 
         public async Task<BaseAnswer> GetAnswer(string question)
         {
-            var baseAnswer = await _answerService.GetAnswerAsync(question.ToLower().Split(' '));
+            var baseAnswer = await _answerService.GetAnswerAsync(question);
             ExtendedAnswer? extendedAnswer;
 
             switch (baseAnswer.Type)
