@@ -15,6 +15,6 @@ namespace OAI_API.Services
         /// </summary>
         /// <param name="answerKeyWords">The keywords from the question</param>
         /// <returns>The simple answer with the type</returns>
-        Task<BaseAnswer> GetAnswerAsync(string[] answerKeyWords);
+        Task<BaseAnswer> GetAnswerAsync(string question);
     }
 }

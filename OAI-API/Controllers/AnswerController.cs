@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OAI_API.Manager;
 using OAI_API.Models;
+using OAI_API.Services;
 
 namespace OAI_API.Controllers
 {
@@ -9,17 +9,17 @@ namespace OAI_API.Controllers
     [ApiController]
     public class AnswerController : ControllerBase
     {
-        private readonly IAnwserManager _anwserManager;
+        private readonly IAnswerService _answerService;
 
-        public AnswerController(IAnwserManager anwserManager)
+        public AnswerController(IAnswerService answerService)
         {
-            _anwserManager = anwserManager;
+            _answerService = answerService;
         }
 
         [HttpPost()]
         public async Task<SearchResponse> Search([FromBody] SearchRequest request)
         {
-            var answer = await _anwserManager.GetAnswer(request.Question);
+            var answer = await _answerService.GetAnswerAsync(request.Question);
 
             return new SearchResponse { Answer = answer.AnswerText, QuestionId = answer.AnswerId.ToString() };
         }
