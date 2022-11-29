@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OAI_API.Models;
 using OAI_API.Services;
+using OAI_API.Shared;
 
 namespace OAI_API.Controllers
 {
@@ -10,10 +11,14 @@ namespace OAI_API.Controllers
     public class AnswerController : ControllerBase
     {
         private readonly IAnswerService _answerService;
+        private readonly IQuestionService _questionService;
 
-        public AnswerController(IAnswerService answerService)
+        public AnswerController(
+            IAnswerService answerService, 
+            IQuestionService questionService)
         {
             _answerService = answerService;
+            _questionService = questionService;
         }
 
         [HttpPost()]
@@ -21,7 +26,9 @@ namespace OAI_API.Controllers
         {
             var answer = await _answerService.GetAnswerAsync(request.Question);
 
-            return new SearchResponse { Answer = answer.AnswerText, QuestionId = answer.AnswerId.ToString() };
+            var question = await _questionService.RegisterQuestionAsync(new Question() { Text = request.Question, Keywords = answer.Keywords, Answer = answer });
+
+            return new SearchResponse { Answer = answer.AnswerText, QuestionId = question.Id.ToHashId() };
         }
     }
 }

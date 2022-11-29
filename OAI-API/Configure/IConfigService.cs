@@ -7,6 +7,9 @@
         /// </summary>
         string GetConnectionString();
         (string address, int port) GetAddressPort();
-
+        /// <summary>
+        /// Gets the salt
+        /// </summary>
+        string GetSalts(string type);
     }
 }
