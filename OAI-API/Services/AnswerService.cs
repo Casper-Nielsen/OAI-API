@@ -8,15 +8,18 @@ namespace OAI_API.Services
         private readonly IAnswerRepository _answerRepository;
         private readonly IAIRepository _aiRepository;
         private readonly ILocationRepository _locationRepository;
+        private readonly ILunchRepository _lunchRepository;
 
         public AnswerService(
             IAnswerRepository answerRepository,
             IAIRepository aiRepository,
-            ILocationRepository locationRepository)
+            ILocationRepository locationRepository,
+            ILunchRepository lunchRepository)
         {
             _answerRepository = answerRepository;
             _aiRepository = aiRepository;
             _locationRepository = locationRepository;
+            _lunchRepository = lunchRepository;
         }
 
         public async Task<BaseAnswer> GetAnswerAsync(int answerId)
@@ -76,14 +79,21 @@ namespace OAI_API.Services
             {
                 case AnswerType.Static:
                     return baseAnswer;
+
                 case AnswerType.External:
                     extendedAnswer = (ExtendedAnswer)baseAnswer;
-                    extendedAnswer.AnswerText = $"Vi understøtter ikke external data. ({extendedAnswer.ExtededParmeter})";
+                    extendedAnswer.AnswerText = extendedAnswer.ExtededParmeter switch
+                    {
+                        "frokost" => await _lunchRepository.GetLunchMenuAsync(),
+                        _ => $"Vi understøtter ikke external data. ({extendedAnswer.ExtededParmeter})",
+                    };
                     return extendedAnswer;
+
                 case AnswerType.Location:
                     extendedAnswer = (ExtendedAnswer)baseAnswer;
                     extendedAnswer.AnswerText = await _locationRepository.GetDirectionsToLocationAsync(extendedAnswer.ExtededParmeter);
                     return extendedAnswer;
+
                 default:
                     throw new NotImplementedException($"answer type not supported ({baseAnswer.Type})");
             }

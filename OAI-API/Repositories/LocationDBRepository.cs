@@ -3,14 +3,12 @@ using OAI_API.Shared;
 
 namespace OAI_API.Repositories
 {
-    public class LocationDBRepository : ILocationRepository
+    /// <summary>
+    /// Gets the route from a predefined route
+    /// </summary>
+    public class LocationDBRepository : DBRepository, ILocationRepository
     {
-        private readonly IDatabaseFactory _connectionFactory;
-
-        public LocationDBRepository(IDatabaseFactory connectionFactory)
-        {
-            _connectionFactory = connectionFactory;
-        }
+        public LocationDBRepository(IDatabaseFactory connectionFactory) : base(connectionFactory) { }
 
         public async Task<string> GetDirectionsToLocationAsync(string location)
         {
