@@ -4,14 +4,12 @@ using Dapper;
 
 namespace OAI_API.Repositories
 {
-    public class AnswerDBRepository : IAnswerRepository
+    /// <summary>
+    /// Controls the Answers in the database
+    /// </summary>
+    public class AnswerDBRepository : DBRepository, IAnswerRepository
     {
-        private readonly IDatabaseFactory _connectionFactory;
-
-        public AnswerDBRepository(IDatabaseFactory connectionFactory)
-        {
-            _connectionFactory = connectionFactory;
-        }
+        public AnswerDBRepository(IDatabaseFactory connectionFactory) : base(connectionFactory) { }
 
         public async Task<AnswerDTO> GetAnswerAsync(int answerId)
         {

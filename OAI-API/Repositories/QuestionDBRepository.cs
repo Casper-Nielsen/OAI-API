@@ -5,14 +5,12 @@ using System.Data;
 
 namespace OAI_API.Repositories
 {
-    public class QuestionDBRepository : IQuestionRepository
+    /// <summary>
+    /// Controls the questions in the database
+    /// </summary>
+    public class QuestionDBRepository : DBRepository, IQuestionRepository
     {
-        private readonly IDatabaseFactory _connectionFactory;
-
-        public QuestionDBRepository(IDatabaseFactory connectionFactory)
-        {
-            _connectionFactory = connectionFactory;
-        }
+        public QuestionDBRepository(IDatabaseFactory connectionFactory) : base(connectionFactory) { }
 
         public async Task<QuestionDTO> RegisterQuestionAsync(QuestionDTO question)
         {

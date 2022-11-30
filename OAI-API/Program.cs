@@ -21,6 +21,7 @@ builder.Services.AddTransient<ILocationRepository, LocationDBRepository>();
 builder.Services.AddTransient<IAnswerRepository, AnswerDBRepository>();
 builder.Services.AddTransient<IAIRepository, AnswerTCPRepository>();
 builder.Services.AddTransient<IQuestionRepository, QuestionDBRepository>();
+builder.Services.AddTransient<ILunchRepository, LunchDBRepository>();
 
 builder.Services.AddTransient<IAnswerService, AnswerService>();
 builder.Services.AddTransient<IQuestionService, QuestionService>();
