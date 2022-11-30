@@ -48,5 +48,17 @@
 
             return (address, port);
         }
+
+        public string GetSalts(string type)
+        {
+            var salt = _configuration.GetSection("Salts").GetValue<string>(type);
+
+            if (string.IsNullOrEmpty(salt))
+            {
+                throw new ArgumentNullException(nameof(type), $@"There are no salt for that type");
+            }
+
+            return salt;
+        }
     }
 }

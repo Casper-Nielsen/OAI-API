@@ -14,6 +14,7 @@
             ExtededParmeter = dataAnswer.AnswerValue;
             AnswerId = dataAnswer.AnswerId;
             Type = dataAnswer.AnswerType;
+            Keywords = dataAnswer.ValidKeywords;
         }
     }
 }
