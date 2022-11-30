@@ -85,6 +85,7 @@ namespace OAI_API.Services
                     extendedAnswer.AnswerText = extendedAnswer.ExtededParmeter switch
                     {
                         "frokost" => await _lunchRepository.GetLunchMenuAsync(),
+                        "klokken" => $"Klokken er {DateTime.Now:HH:mm}",
                         _ => $"Vi understøtter ikke external data. ({extendedAnswer.ExtededParmeter})",
                     };
                     return extendedAnswer;
