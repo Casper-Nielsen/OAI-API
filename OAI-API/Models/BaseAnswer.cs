@@ -3,16 +3,16 @@
     /// <summary>
     /// Holds the base information about a Answer
     /// </summary>
-    public class BaseAnswer
+    public class Answer
     {
         public string AnswerText { get; set; } = string.Empty;
         public int AnswerId { get; set; }
-        public string[] Keywords { get; set; }
+        public string[] Keywords { get; set; } = Array.Empty<string>();
         public AnswerType Type { get; set; }
 
-        public BaseAnswer() { }
+        public Answer() { }
 
-        public BaseAnswer(AnswerDTO dataAnswer)
+        public Answer(AnswerDTO dataAnswer)
         {
             AnswerText = dataAnswer.AnswerValue;
             AnswerId = dataAnswer.AnswerId;

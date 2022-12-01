@@ -13,8 +13,8 @@ namespace OAI_API.Repositories
         /// <summary>
         /// Gets the answers information that best matches the keywords.
         /// </summary>
-        /// <param name="answerKeyWords">The keywords from the question</param>
+        /// <param name="answerKeywords">The keywords from the question</param>
         /// <returns>all the answers information</returns>
-        Task<AnswerDTO> GetAnswerAsync(string[] answerKeyWords);
+        Task<AnswerDTO> GetAnswerAsync(string[] answerKeywords);
     }
 }

@@ -10,14 +10,14 @@ using System.Text.Json.Serialization;
 
 namespace OAI_API.Repositories
 {
-    public class AnswerTCPRepository : IAIRepository
+    public class IARepository : IAIRepository
     {
 
         private readonly string _address;
         private readonly int _port;
 
 
-        public AnswerTCPRepository(IConfigService config)
+        public IARepository(IConfigService config)
         {
             (_address, _port) = config.GetAddressPort();
         }

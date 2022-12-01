@@ -19,7 +19,7 @@ namespace OAI_API.Controllers
         }
 
         [HttpPost("feedback")]
-        public async Task Feedback([FromBody] FeedbackRequest request)
+        public async Task FeedbackAsync([FromBody] FeedbackRequest request)
         {
             var question = await _questionService.GetQuestionAsync(request.QuestionId.FromHashId());
 

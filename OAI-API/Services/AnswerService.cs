@@ -22,7 +22,7 @@ namespace OAI_API.Services
             _lunchRepository = lunchRepository;
         }
 
-        public async Task<BaseAnswer> GetAnswerAsync(int answerId)
+        public async Task<Answer> GetAnswerAsync(int answerId)
         {
             var dataAnswer = await _answerRepository.GetAnswerAsync(answerId);
 
@@ -31,12 +31,12 @@ namespace OAI_API.Services
                 throw new ArgumentException("There are no answer with the given Id");
             }
 
-            BaseAnswer answer = ConvertToBaseAnswer(dataAnswer);
+            Answer answer = ConvertToBaseAnswer(dataAnswer);
 
             return answer;
         }
 
-        public async Task<BaseAnswer> GetAnswerAsync(string question)
+        public async Task<Answer> GetAnswerAsync(string question)
         {
             var dataAnswer = await _aiRepository.GetAnswerAsync(question);
 
@@ -45,7 +45,7 @@ namespace OAI_API.Services
                 throw new ArgumentException("There are no answer with the given keywords");
             }
 
-            BaseAnswer answer = await FillExtendedAnswer(ConvertToBaseAnswer(dataAnswer));
+            Answer answer = await FillExtendedAnswerAsync(ConvertToBaseAnswer(dataAnswer));
 
             return answer;
         }
@@ -55,11 +55,11 @@ namespace OAI_API.Services
         /// </summary>
         /// <param name="answer">Answer to converet</param>
         /// <returns>Base answer or extentet answer</returns>
-        private BaseAnswer ConvertToBaseAnswer(AnswerDTO answer)
+        private Answer ConvertToBaseAnswer(AnswerDTO answer)
         {
             return answer.AnswerType switch
             {
-                AnswerType.Static => new BaseAnswer(answer),
+                AnswerType.Static => new Answer(answer),
                 AnswerType.Location or AnswerType.External => new ExtendedAnswer(answer),
                 _ => throw new NotSupportedException("answer type is not supported"),
             };
@@ -70,7 +70,7 @@ namespace OAI_API.Services
         /// </summary>
         /// <param name="baseAnswer">Answer that should get the missing information</param>
         /// <returns>full answer information</returns>
-        private async Task<BaseAnswer> FillExtendedAnswer(BaseAnswer baseAnswer)
+        private async Task<Answer> FillExtendedAnswerAsync(Answer baseAnswer)
         {
 
             ExtendedAnswer? extendedAnswer;

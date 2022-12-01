@@ -17,7 +17,7 @@ namespace OAI_API.Services
         {
             var questionDTO = await _questionRepository.GetQuestionAsync(questionId);
 
-            var answer = new BaseAnswer() { AnswerId = questionDTO.AnswerId };
+            var answer = new Answer() { AnswerId = questionDTO.AnswerId };
 
             return new Question(questionDTO, answer);
         }
@@ -26,7 +26,7 @@ namespace OAI_API.Services
         {
             var questionDTO = await _questionRepository.RegisterQuestionAsync(new QuestionDTO(question));
 
-            var answer = new BaseAnswer() { AnswerId = questionDTO.AnswerId };
+            var answer = new Answer() { AnswerId = questionDTO.AnswerId };
 
             return new Question(questionDTO, answer);
         }

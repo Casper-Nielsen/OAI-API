@@ -19,7 +19,7 @@ builder.Services.AddSingleton<IDatabaseFactory, SharedDatabaseFactory>();
 
 builder.Services.AddTransient<ILocationRepository, LocationDBRepository>();
 builder.Services.AddTransient<IAnswerRepository, AnswerDBRepository>();
-builder.Services.AddTransient<IAIRepository, AnswerTCPRepository>();
+builder.Services.AddTransient<IAIRepository, IARepository>();
 builder.Services.AddTransient<IQuestionRepository, QuestionDBRepository>();
 builder.Services.AddTransient<ILunchRepository, LunchDBRepository>();
 

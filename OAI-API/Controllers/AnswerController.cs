@@ -22,7 +22,7 @@ namespace OAI_API.Controllers
         }
 
         [HttpPost()]
-        public async Task<SearchResponse> Search([FromBody] SearchRequest request)
+        public async Task<SearchResponse> SearchAsync([FromBody] SearchRequest request)
         {
             var answer = await _answerService.GetAnswerAsync(request.Question);
 
