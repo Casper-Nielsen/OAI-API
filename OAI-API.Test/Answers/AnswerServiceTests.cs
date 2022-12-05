@@ -18,6 +18,7 @@ namespace OAI_API.Test.Answers
         private readonly Mock<IAnswerRepository> _answerRepositoryMock = new();
         private readonly Mock<IAIRepository> _aiRepositoryMock = new();
         private readonly Mock<ILocationRepository> _locationRepositoryMock = new();
+        private readonly Mock<ILunchRepository> _lunchRepositoryMock = new();
 
         [SetUp]
         public void Setup()
@@ -49,12 +50,23 @@ namespace OAI_API.Test.Answers
             _aiRepositoryMock
                 .Setup(r => r.GetAnswerAsync("location test"))
                 .ReturnsAsync(new AnswerDTO { AnswerId = 1, AnswerType = AnswerType.Location, AnswerValue = "test", Status = Status.Active, ValidKeywords = new string[] { "location", "test" } });
+            _aiRepositoryMock
+                .Setup(r => r.GetAnswerAsync("lunch test"))
+                .ReturnsAsync(new AnswerDTO { AnswerId = 1, AnswerType = AnswerType.External, AnswerValue = "frokost", Status = Status.Active, ValidKeywords = new string[] { "lunch", "test" } });
 
             _locationRepositoryMock
                 .Setup(r => r.GetDirectionsToLocationAsync("test"))
                 .ReturnsAsync("test location");
 
-            _answerService = new AnswerService(_answerRepositoryMock.Object, _aiRepositoryMock.Object, _locationRepositoryMock.Object);
+            _lunchRepositoryMock
+                .Setup(r => r.GetLunchMenuAsync())
+                .ReturnsAsync("lunch menu");
+
+            _answerService = new AnswerService(
+                _answerRepositoryMock.Object,
+                _aiRepositoryMock.Object,
+                _locationRepositoryMock.Object,
+                _lunchRepositoryMock.Object);
         }
 
         [TestCase(0)]
@@ -99,15 +111,26 @@ namespace OAI_API.Test.Answers
         }
 
         [TestCase("location test")]
-        public async Task Get_GetWithKeywords_shouldReturn(string question)
+        public async Task Get_GetWithLocationQuestion_shouldReturn(string question)
         {
             var answer = await _answerService.GetAnswerAsync(question);
 
             Assert.IsNotNull(answer);
             Assert.AreEqual(1, answer.AnswerId);
-            Assert.AreEqual(AnswerType.Static, answer.Type);
+            Assert.AreEqual("test location", answer.AnswerText);
+            Assert.AreEqual(AnswerType.Location, answer.Type);
         }
 
+        [TestCase("lunch test")]
+        public async Task Get_GetWithLunchQuestion_shouldReturn(string question)
+        {
+            var answer = await _answerService.GetAnswerAsync(question);
+
+            Assert.IsNotNull(answer);
+            Assert.AreEqual(1, answer.AnswerId);
+            Assert.AreEqual("lunch menu", answer.AnswerText);
+            Assert.AreEqual(AnswerType.External, answer.Type);
+        }
 
         [TestCase("hello")]
         public void Get_GetWithUnkownKeywords_shouldThrow(string question)
