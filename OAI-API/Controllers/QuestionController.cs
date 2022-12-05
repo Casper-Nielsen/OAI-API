@@ -10,15 +10,28 @@ namespace OAI_API.Controllers
     [ApiController]
     public class QuestionController : ControllerBase
     {
+        private readonly IAnswerService _answerService;
         private readonly IQuestionService _questionService;
 
         public QuestionController(
-            IQuestionService questionService)
+            IQuestionService questionService,
+            IAnswerService answerService)
         {
             _questionService = questionService;
+            _answerService = answerService;
         }
 
-        [HttpPost("feedback")]
+        [HttpPost()]
+        public async Task<SearchResponse> SearchAsync([FromBody] SearchRequest request)
+        {
+            var answer = await _answerService.GetAnswerAsync(request.Question);
+
+            var question = await _questionService.RegisterQuestionAsync(new Question() { Text = request.Question, Keywords = answer.Keywords, Answer = answer });
+
+            return new SearchResponse { Answer = answer.AnswerText, QuestionId = question.Id.ToHashId() };
+        }
+
+        [HttpPut("feedback")]
         public async Task FeedbackAsync([FromBody] FeedbackRequest request)
         {
             var question = await _questionService.GetQuestionAsync(request.QuestionId.FromHashId());
