@@ -7,5 +7,8 @@ In order to use this project you must first edit OAI-API/appsettings.json and ad
   "ConnectionStrings": {
     "Default": "<write your connection string here>"
   },
+  "Salts" : {
+    "Question" : "<write a custom salt here>"
+  },
 ...
 ```
